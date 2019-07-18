@@ -1,0 +1,46 @@
+<div id="main" class="container">
+  <h1>Weather App</h1>
+
+  <form {{action "fetchData" on="submit"}}>
+    <label for="search-by">Search by</label>
+
+    {{search-type selected=selected}}
+
+    {{#if (or (eq selected "latlong") (eq selected "lat"))}}
+      <label for="latitude">Latitude</label>
+      <input id="latitude" value={{lat}} />
+    {{/if}}
+
+    {{#if (or (eq selected "latlong") (eq selected "lon"))}}
+      <label for="longitude">Longitude</label>
+      <input id="longitude" value={{lon}} />
+    {{/if}}
+
+
+    {{#if (not-eq selected undefined)}}
+      <input type="submit" id="lets-go" value="Let's Go!">
+    {{/if}}
+  </form>
+
+  {{#if (not-eq charts.temperature.chartData.length 0)}}
+  {{log charts.temperature.chartData}}
+    <div class="chart">
+      {{high-charts mode=false chartOptions=charts.temperature.chartOptions content=charts.temperature.chartData}}
+    </div>
+  {{/if}}
+
+  {{#if (not-eq charts.pressure.chartData.length 0)}}
+    <div class="chart">
+      {{high-charts mode=false chartOptions=charts.pressure.chartOptions content=charts.pressure.chartData}}
+    </div>
+  {{/if}}
+
+  {{#if (not-eq charts.humidity.chartData.length 0)}}
+    <div class="chart">
+      {{high-charts mode=false chartOptions=charts.humidity.chartOptions content=charts.humidity.chartData}}
+    </div>
+  {{/if}}
+
+</div>
+
+{{yield}}
